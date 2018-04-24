@@ -497,3 +497,32 @@ findLCS(a,b)
 
 
 
+# maxheap sort
+
+def maxheap(a):
+    n = len(a)
+    for i in range(n//2):
+        flag = False
+        if 2*i +1 < n and (a[i] < a[2*i +1]):
+            a[i], a[2*i+1] = a[2*i+1], a[i]
+            flag = True
+        if 2*i +2 < n and (a[i] < a[2*i +2]):
+            a[i], a[2*i+2] = a[2*i+2], a[i]
+            flag = True
+        if flag and i > 1:
+            maxheap(a[:i//2])
+    return a
+
+def heapsort(a):
+    n = len(a)
+    b = a
+    for i in range(n-1, 0, -1):
+        b[i] = a[0]
+        a[0] = a.pop(-1)
+        maxheap(a)
+    return b
+
+a = [2,4,7,3,5,9,10]
+heapsort(a)
+
+
