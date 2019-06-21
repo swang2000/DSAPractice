@@ -526,3 +526,271 @@ a = [2,4,7,3,5,9,10]
 heapsort(a)
 
 
+
+'''
+Given a binary tree, find its minimum depth. The minimum depth is the number of nodes along the shortest path from root
+node down to the nearest leaf node.
+'''
+
+import CdataS.BT.BianrySearchTree as tree
+
+def miniBTdepth(root):
+    if root == None:
+        return 0
+    else:
+        return 1+ min(miniBTdepth(root.left_child),miniBTdepth(root.right_child))
+
+
+bst = tree.BST()
+bst.insert(8)
+bst.insert(7)
+bst.insert(9)
+bst.insert(6)
+bst.insert(5)
+bst.insert(4)
+miniBTdepth(bst.root)
+
+
+
+'''
+Find distance from root to given node in a binary tree
+2.4
+Given root of a binary tree and a key x in it, find distance of the given key from root. Distance means num­ber of
+edges between two nodes.
+
+Examples:
+
+Input : x = 45,
+        Root of below tree
+        5
+      /    \
+    10      15
+    / \    /  \
+  20  25  30   35
+       \
+       45
+Output : Distance = 3
+There are three edges on path
+from root to 45.
+'''
+
+import CdataS.BT.BianrySearchTree as tree
+
+def findDist(root, n, dep):
+    if root == None:
+        return False
+    elif root.value == n:
+        return True
+
+    elif findDist(root.left_child, n, dep):
+        dep[0] += 1
+        return True
+    elif findDist(root.right_child, n, dep):
+        dep[0] += 1
+        return True
+    return False
+
+bst = tree.BST()
+bst.insert(5)
+bst.insert(3)
+bst.insert(2)
+bst.insert(2.5)
+bst.insert(4)
+bst.insert(8)
+bst.insert(6)
+l = [-1]
+dep = [0]
+findDist(bst.root, 2.5, dep)
+
+
+
+'''
+Print a given matrix in spiral form
+3
+Given a 2D array, print it in spiral form. See the following examples.
+
+Input:
+        1    2   3   4
+        5    6   7   8
+        9   10  11  12
+        13  14  15  16
+Output:
+1 2 3 4 8 12 16 15 14 13 9 5 6 7 11 10
+
+
+Input:
+        1   2   3   4  5   6
+        7   8   9  10  11  12
+        13  14  15 16  17  18
+Output:
+1 2 3 4 5 6 12 18 17 16 15 14 13 7 8 9 10 11
+'''
+
+import numpy as np
+def printSpiral(a):
+    mr, mc= a.shape
+    lr = lc = i = j = 0
+
+    while(mc > lc or (mr > lr)):
+        if i == lr and j == lc:
+            for j in range(lc, mc):
+                print(a[i, j], end=' ')
+                if j == mc-1:
+                    mc -= 1
+
+        if i == lr and j == mc:
+            for i in range(lr+1, mr):
+                print(a[i, j], end=' ')
+                if i == mr-1:
+                    mr -= 1
+
+        if i == mr and j == mc:
+            for j in range(mc-1, lc-1, -1):
+                print(a[i, j], end=' ')
+                if j == lc:
+                    lc += 1
+
+
+        if i == mr and j == lc-1:
+            for i in range(mr-1, lr, -1):
+                print(a[i, j], end=' ')
+                if i == lr+1:
+                    lr += 1
+                    j += 1
+
+
+a = np.array([[1,    2,   3,   4],
+        [5,    6,   7,   8],
+        [9,   10,  11,  12],
+        [13,  14,  15,  16]])
+printSpiral(a)
+
+
+
+'''
+Write a program to Calculate Size of a tree
+1.4
+Size of a tree is the number of elements present in the tree. Size of the below tree is 5.
+
+Example Tree
+Example Tree
+
+Size() function recursively calculates the size of a tree. It works as follows:
+
+Size of a tree = Size of left subtree + 1 + Size of right subtree.
+'''
+
+import CdataS.BT.BianrySearchTree as tree
+
+def treeSize(root):
+    if root == None:
+        return 0
+    else:
+        return 1+treeSize(root.left_child)+treeSize(root.right_child)
+
+
+bst = tree.BST()
+bst.insert(5)
+bst.insert(3)
+bst.insert(2)
+bst.insert(2.5)
+bst.insert(4)
+bst.insert(8)
+bst.insert(6)
+
+treeSize(bst.root)
+
+
+
+'''
+Root to leaf path sum equal to a given number
+2.4
+Given a binary tree and a number, return true if the tree has a root-to-leaf path such that adding up all the values
+along the path equals the given number. Return false if no such path can be found.
+
+
+
+For example, in the above tree root to leaf paths exist with following sums.
+
+21 –> 10 – 8 – 3
+23 –> 10 – 8 – 5
+14 –> 10 – 2 – 2
+
+So the returned value should be true only for numbers 21, 23 and 14. For any other number, returned value should be false.
+'''
+import CdataS.BT.BianrySearchTree as tree
+
+
+def checkSum(root, a):
+    if root == None:
+        return False
+    elif a== root.value and root.left_child == None and (root.right_child== None):
+        return True
+    elif checkSum(root.left_child, a-root.value) or checkSum(root.right_child, a-root.value):
+        return True
+    else:
+        return False
+
+
+bst = tree.BST()
+bst.insert(5)
+bst.insert(3)
+bst.insert(2)
+bst.insert(2.5)
+bst.insert(4)
+bst.insert(8)
+bst.insert(6)
+
+checkSum(bst.root, 12.5)
+
+
+'''
+Prime Number of Set Bits in Binary Representation
+2
+Given two integers ‘L’ and ‘R’, we need to write a program that finds the count of numbers having prime number of set
+bits in their binary representation in the range [L, R].
+
+Examples:
+
+Input : 6 10
+Output : 4
+6 -> 110 (2 set bits, 2 is prime)
+7 -> 111 (3 set bits, 3 is prime)
+9 -> 1001 (2 set bits , 2 is prime)
+10->1010 (2 set bits , 2 is prime)
+
+Input : 10 15
+Output : 5
+10 -> 1010(2 number of set bits)
+11 -> 1011(3 number of set bits)
+12 -> 1100(2 number of set bits)
+13 -> 1101(3 number of set bits)
+14 -> 1110(3 number of set bits)
+15 -> 1111(4 number of set bits)
+Hence total count is 5
+'''
+import numpy as np
+def isPrime(a):
+    for i in range(2,a):
+        if a%i ==0:
+            return False
+    return True
+
+def numofones(a):
+    inta = [int(x) for x in a]
+    return sum(np.array(inta) == 1)
+
+def countPrime(a, b):
+    pn = 0
+    for i in range(a, b+1):
+        x = bin(i)[2:]
+        num = numofones(x)
+        if isPrime(num):
+            pn += 1
+    return pn
+
+
+countPrime(10, 15)
+
+
+
